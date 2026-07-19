@@ -1,0 +1,13 @@
+version: 1
+project: etzhayyim-project-projection-manager
+strategy:
+  target: spinkube
+  runtime_dependency: none
+services:
+  - name: projection-manager-pm7k3x9n
+    status: implemented
+    target_component: projection-manager-mcp-component
+    dependency:
+      external_state_store: true
+      external_pubsub: false
+    notes: "State via performer/nata Arrow tables. Integrates with threads (br8bojxp), scheduler (5dcfvsbd), projection-operator (po1x9k2m), hub (qk6cjn0l) via Connect gRPC."

@@ -1,0 +1,219 @@
+{
+  "@context": [
+    "https://schema.org/",
+    {
+      "etzhayyim": "https://etzhayyim.com/schemas/",
+      "dodaf": "http://dodcio.defense.gov/Library/DoDAF.aspx#"
+    }
+  ],
+  "@type": "Project",
+  "@id": "urn:etzhayyim:project:etzhayyim-project-projection-operator",
+  "name": "Project Projection Operator",
+  "identifier": "etzhayyim-project-projection-operator",
+  "description": "projection-manager を統合した project runtime。1 Project = 1 Clerk Org を前提に、message/file/agent 実行を git + actor state で運用する。",
+  "url": "https://po.etzhayyim.com",
+  "codeRepository": "https://github.com/etzhayyim/etzhayyim-root",
+  "author": {
+    "@type": "Organization",
+    "name": "etzhayyim",
+    "url": "https://etzhayyim.com"
+  },
+  "component": [
+    {
+      "@type": "WebAPI",
+      "name": "projection-operator-mcp",
+      "description": "Unified projection operator (project/thread/message/run routing)",
+      "url": "https://po.etzhayyim.com/api/mcp",
+      "applicationCategory": "Backend",
+      "programmingLanguage": "Go",
+      "runtimePlatform": "SpinApp (TinyGo)",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "name": "nanoid",
+          "value": "po1x9k2m"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "protocol",
+          "value": "MCP JSON-RPC 2.0 / gRPC bridge"
+        }
+      ]
+    },
+    {
+      "@type": "WebAPI",
+      "name": "projection-manager-mcp",
+      "description": "Merged manager actor for org quota, contracts, activity, auction, blocker handling",
+      "url": "https://po.etzhayyim.com/pm7k3x9n/api/mcp",
+      "applicationCategory": "Backend",
+      "programmingLanguage": "Go",
+      "runtimePlatform": "SpinApp (TinyGo)"
+    },
+    {
+      "@type": "WebAPI",
+      "name": "project-mail-ingest-resend",
+      "description": "Per-project inbox actor: receive [project-nanoid]@etzhayyim.com via Resend, ingest as activity/message, decide auto-reply policy",
+      "url": "https://po.etzhayyim.com/api/mail/inbound"
+    }
+  ],
+  "etzhayyim:clerkModel": {
+    "projectUnit": "1 Project = 1 Clerk Org",
+    "orgField": "clerk_org",
+    "membershipSync": "Project Membership <-> Clerk Organization Membership"
+  },
+  "etzhayyim:activity": [
+    "project.ingest_inbox",
+    "project.route",
+    "project.run",
+    "project.approval",
+    "project.closeout",
+    "project.manage_resources",
+    "project.manage_contracts",
+    "project.activity_log",
+    "project.mail_ingest"
+  ],
+  "etzhayyim:capability": [
+    "Project state transition orchestration",
+    "Inbox event correlation",
+    "Approval-bound execution gating",
+    "Org quota + contract governance",
+    "Git-managed project workspace with actor-local state"
+  ],
+  "etzhayyim:dodafMapping": {
+    "OV-2": "Performer for unified projection runtime (operator + manager)",
+    "PV-1": "Create → execute → evaluate → closeout lifecycle",
+    "CV-1": "Project collaboration + AI agent operation capability"
+  },
+  "etzhayyim:resourceBoundary": "project",
+  "rdfUnifiedDocuments": {
+    "@type": "Dataset",
+    "name": "Unified top-level RDF/JSON-LD documents",
+    "description": "Consolidated from project top-level *.jsonld files except PROJECT.jsonld.",
+    "documents": [
+      {
+        "fileName": "scheduler.jsonld",
+        "content": {
+          "@context": [
+            "https://schema.org/",
+            {
+              "etzhayyim": "https://etzhayyim.com/schemas/",
+              "capabilities": "etzhayyim:capabilities",
+              "survivalIndicators": "etzhayyim:survivalIndicators",
+              "scheduler": "etzhayyim:scheduler",
+              "milestones": "etzhayyim:milestones",
+              "blockers": "etzhayyim:blockers",
+              "dependsOn": {
+                "@id": "etzhayyim:dependsOn",
+                "@type": "@id"
+              },
+              "ingestKey": "etzhayyim:ingestKey",
+              "window": "etzhayyim:window",
+              "valueUpdatedAt": "etzhayyim:valueUpdatedAt"
+            }
+          ],
+          "@type": "CreativeWork",
+          "name": "Project Projection Operator Scheduler",
+          "identifier": "etzhayyim-project-projection-operator/scheduler",
+          "description": "Unified schedule for operator + manager + resend inbox actor.",
+          "dateCreated": "2026-02-15T04:25:26+00:00",
+          "milestones": [
+            {
+              "name": "Consolidate projection-manager into projection-operator",
+              "window": "2026-Q1",
+              "valueUpdatedAt": "2026-02-20T00:00:00Z"
+            },
+            {
+              "name": "Serve MCP from po.etzhayyim.com",
+              "window": "2026-Q1",
+              "valueUpdatedAt": "2026-02-20T00:00:00Z"
+            },
+            {
+              "name": "Enable per-project Resend inbound actor ([project-nanoid]@etzhayyim.com)",
+              "window": "2026-Q1",
+              "valueUpdatedAt": "2026-02-20T00:00:00Z"
+            }
+          ],
+          "blockers": []
+        }
+      },
+      {
+        "fileName": "ui-architecture.jsonld",
+        "content": {
+          "@context": [
+            "https://schema.org/",
+            {
+              "etzhayyim": "https://etzhayyim.com/schemas/"
+            }
+          ],
+          "@type": "CreativeWork",
+          "name": "Projection Operator Unified UI / Domain Model",
+          "description": "SpinApp + Microsoft Teams ライクな project collaboration UI と AI agent 統合設計",
+          "etzhayyim:principles": [
+            "1 Project = 1 Clerk Org (clerk_org)",
+            "Project workspace is git-managed; large blobs and volatile presence stay in actor state",
+            "Thread = parent message + replies + one AI agent runtime/worktree"
+          ],
+          "etzhayyim:entities": [
+            "Projects(公開/非公開/DM/グループDM)",
+            "Project Resources",
+            "Project Scheduler",
+            "Project Member / Identity / DeviceSession",
+            "Membership(role, permission, mute, notification prefs)",
+            "Message(本文, メンション, 添付, 編集履歴, 削除フラグ)",
+            "Thread(親 + 返信集合, ai agent 実行環境, worktree)",
+            "Reaction",
+            "ReadState(last_read_seq, per-user per-channel)",
+            "Presence / Typing(TTL)",
+            "Attachment / File(metadata + SpinApp blob ref)",
+            "SearchIndex",
+            "Agents",
+            "Standard",
+            "Context",
+            "Context Contract"
+          ],
+          "etzhayyim:uiInformationArchitecture": {
+            "leftRail": [
+              "Projects",
+              "DM",
+              "Group DM",
+              "Mentions",
+              "Agents",
+              "Files"
+            ],
+            "centerPane": [
+              "Message timeline",
+              "Thread replies",
+              "Composer",
+              "Scheduler chips"
+            ],
+            "rightPane": [
+              "Project Resources",
+              "Members",
+              "Running Agent",
+              "Context Contract",
+              "Activity"
+            ]
+          },
+          "etzhayyim:agentRoles": [
+            {
+              "name": "project-manager-agent",
+              "kind": "actor",
+              "description": "Project manager AI actor. Handles planning, assignment, blocker triage, and governance checks."
+            },
+            {
+              "name": "member-agent",
+              "kind": "assistant",
+              "description": "Per-member assistant bound to membership permissions and context contract."
+            }
+          ],
+          "etzhayyim:mailIngestionFlow": [
+            "Resend receives [project-nanoid]@etzhayyim.com",
+            "resend-inbound actor validates sender against project membership/allowlist",
+            "mail converted to Activity + Message with attachments stored via SpinApp blob",
+            "project-manager-agent decides auto reply / escalation / silent log"
+          ]
+        }
+      }
+    ]
+  }
+}
