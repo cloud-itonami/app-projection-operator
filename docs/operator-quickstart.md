@@ -34,7 +34,7 @@ error: could not read IPC response
 ## 1. 記録がパースできるか（EDN 2 本）
 
 ```bash
-nbb -e '(require (quote ["fs" :as fs]) (quote [clojure.edn :as edn]))
+kbb --backend sci -e '(require (quote ["fs" :as fs]) (quote [clojure.edn :as edn]))
 (doseq [f ["README.edn" "migration.edn"]]
   (let [forms (edn/read-string (str "[" (fs/readFileSync f "utf8") "]"))]
     (when-not (= 1 (count forms))
@@ -132,7 +132,7 @@ ETZ=<etzhayyim/root の checkout パス>          # 例: ~/github/com-junkawasak
 REV=691c245da48f3acb11dd757218f189ff2482b1c8
 SRC=60-apps/etzhayyim-project-projection-operator
 
-echo "recorded : $(nbb -e '(require (quote ["fs" :as fs]) (quote [clojure.edn :as edn])) (println (get-in (edn/read-string (fs/readFileSync "migration.edn" "utf8")) [:source :git-tree]))')"
+echo "recorded : $(kbb --backend sci -e '(require (quote ["fs" :as fs]) (quote [clojure.edn :as edn])) (println (get-in (edn/read-string (fs/readFileSync "migration.edn" "utf8")) [:source :git-tree]))')"
 echo "actual   : $(git -C $ETZ rev-parse $REV:$SRC)"
 ```
 
