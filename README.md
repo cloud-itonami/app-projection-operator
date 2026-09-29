@@ -1,12 +1,12 @@
 # app-projection-operator
 
 **この repo は記録（record）の保管庫であって、実行される projection operator ではない。**
-`CLAUDE.md` が記述する MCP actor 群 —— `projection-manager-mcp`（34 tool）・
+`AGENTS.md` が記述する MCP actor 群 —— `projection-manager-mcp`（34 tool）・
 `projection-operator-mcp`・`po-ui` —— の**コードは 1 行もここに無い。**
 ここに在るのは、`etzhayyim/root` から切り出された 6 個の記述ファイルと、
 その切り出しを記録した 2 個の生成レコードだけである。
 
-`CLAUDE.md` を読んで実装を探しに来た読み手が最初に必要とするのはこの事実なので、
+`AGENTS.md` を読んで実装を探しに来た読み手が最初に必要とするのはこの事実なので、
 名乗りの直後に置く。
 
 | | |
@@ -25,9 +25,9 @@
 
 ---
 
-## 1. 読み手が最初に踏む地雷 —— `CLAUDE.md` は、ここに無いものを記述している
+## 1. 読み手が最初に踏む地雷 —— `AGENTS.md` は、ここに無いものを記述している
 
-`CLAUDE.md` は次のディレクトリ構造と build 手順を書いている:
+`AGENTS.md` は次のディレクトリ構造と build 手順を書いている:
 
 ```
 wasm/
@@ -58,13 +58,13 @@ go vet ./...
 最後の 1 行が effort floor である —— 検索は 91 件の `wasm/` パスを見つけられている。
 つまり 0 件は「検索が壊れていた」のではなく**本当に無い**。
 
-したがって `CLAUDE.md` の build 手順・34 tool 一覧・`go vet ./...` は、この repo に対しては
+したがって `AGENTS.md` の build 手順・34 tool 一覧・`go vet ./...` は、この repo に対しては
 **踏めない**。読み物としての設計記録であって、操作手順ではない。
 
 ## 2. ここに在るもの —— そして、それは出所と正確に一致する
 
 ```
-CLAUDE.md                              6,709   設計記述（§1 のとおり実装は伴わない）
+AGENTS.md                              6,709   設計記述（§1 のとおり実装は伴わない）
 PROJECT.jsonld                         8,062   JSON-LD の project 記録（DoDAF DM2 対応付き）
 appview/README.md                        741   統合構成の説明
 appview/migration-plan-manager.yaml      493   spinkube 移行計画（§4 参照）
@@ -89,7 +89,7 @@ migration.edn                            421   ┘（出所には無い）
 
 ## 3. 宣言されている URL は、どれも名前解決しない
 
-`PROJECT.jsonld` の `url`、`CLAUDE.md` の endpoint 表、`appview/README.md` の
+`PROJECT.jsonld` の `url`、`AGENTS.md` の endpoint 表、`appview/README.md` の
 「MCP エンドポイントは `po.etzhayyim.com` を正とします」は、すべて生きていない。
 2026-08-17 (UTC) の実測:
 
@@ -137,9 +137,9 @@ origin/main の 60-apps/ 直下のエントリ                          → 1 �
 
 - **記録の完全性を検査する** —— `docs/operator-quickstart.md`。パース検査・来歴照合・
   バイト恒等式で、8 ファイルが改竄されていないことを確認できる。
-- **`CLAUDE.md` の記述を実装する** —— そのときは §1 を書き換えること。
+- **`AGENTS.md` の記述を実装する** —— そのときは §1 を書き換えること。
 - **記録として畳む** —— 実装しないと決めるなら、`status: implemented`（§4）と
   死んだ URL（§3）を訂正した上で、そう宣言する。
 
-**やってはいけないのは、`CLAUDE.md` を実装済みの説明として引用することである。**
+**やってはいけないのは、`AGENTS.md` を実装済みの説明として引用することである。**
 34 tool の表は仕様であって、在庫ではない。

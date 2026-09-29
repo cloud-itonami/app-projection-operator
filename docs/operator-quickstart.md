@@ -99,7 +99,7 @@ services : [('projection-manager-pm7k3x9n', 'implemented')]
 
 ```bash
 git ls-files | wc -l | tr -d ' '
-cat CLAUDE.md NOTICE OWNERS PROJECT.jsonld \
+cat AGENTS.md NOTICE OWNERS PROJECT.jsonld \
     appview/README.md appview/migration-plan-manager.yaml | wc -c | tr -d ' '
 cat README.edn migration.edn | wc -c | tr -d ' '
 ```
@@ -189,7 +189,7 @@ echo "checked=$n  mismatched=$bad"
 実測（exit 0）:
 
 ```
-  OK    CLAUDE.md
+  OK    AGENTS.md
   OK    NOTICE
   OK    OWNERS
   OK    PROJECT.jsonld
@@ -217,7 +217,7 @@ checked=6  mismatched=0
 | `PROJECT.jsonld` を JSON として壊す | §2 が落ちる |
 | yaml を壊す | §3 が落ちる |
 | `:git-tree` の 1 桁を変える | §5 のみ落ちる |
-| `CLAUDE.md` に 1 バイト足す | §6 が `DIFF CLAUDE.md` / exit 1 |
+| `AGENTS.md` に 1 バイト足す | §6 が `DIFF AGENTS.md` / exit 1 |
 | `NOTICE` から 1 バイト削る | §6 が `DIFF NOTICE` / exit 1 |
 | yaml の `implemented` を `planned` に書き換える | §6 が `DIFF …yaml` / exit 1 |
 | 保管対象を 1 個消す | §6 が `here=MISSING` / exit 1 |
@@ -233,7 +233,7 @@ checked=6  mismatched=0
 
 **捕まえないもの:**
 
-- **どの手順も内容の正しさを見ていない。** `CLAUDE.md` が実在しないコードを
+- **どの手順も内容の正しさを見ていない。** `AGENTS.md` が実在しないコードを
   記述していること（`README.md` §1）は、これらの検査を全部通る。**保管されているのは
   正しさではなく、出所と同一であるという事実だけである。**
 - **§5 / §6 は出所 repo の checkout が要る。** 手元に無いときは
